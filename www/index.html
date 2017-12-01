@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<meta name="format-detection" content="telephone=no">
+	<meta name="msapplication-tap-highlight" content="no">
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+	<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<title>Indexation Text</title>
+</head>
+<body>
+	<div data-role="page"  id="content">
+		<div data-role="header" id="header">
+			<h1>DocsIndex</h1>
+		</div>
+		<div data-role="main" class="ui-content">
+			 <ul data-role="listview">
+			    <li id="displayDocs" ><a href="#" >Afficher les documents </a></li>
+			    <li id="docs"><p></p></li>
+			    <li id ="addDoc" ><a href="#">Ajouter un document</a></li>
+			    <input type="text" id ="addDocInput" placeholder="Exmple : les chiens mangent la viande">
+					<button id="addDocBtn">Ajouter</button>
+			    <li id="displayIndexedDocs" ><a href="#" >Afficher les fichiers Index</a></li>
+			    <li id="docsIndexed"><p></p></li>
+			    <li id="inversDocs" ><a>Afficher les fichers Inverses</a></li>
+			    <li id="inversDocsDisplay"><p></p></li>
+       </ul>
+		</div>
+		<div data-role="footer" data-position="fixed" id="footer">
+			<h1>© AymenDev 2018</h1>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+	  <script src="js/stemmer/lib/Snowball.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+</body>
+
+</html>
