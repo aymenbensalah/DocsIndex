@@ -73,15 +73,35 @@ $("#addDoc").on("tap",function(){
   $("#addDocInput").slideToggle();
   $("#addDocBtn").slideToggle();
   if($("#addDocInput").val() !="") {
-    $("#addDocBtn").on("tap",function(){
+    $("#addDocBtn").on("tap",function() {
       docs.push($("#addDocInput").val());
     }
     );
   }
 }
 );
+  var wordFrequencyStr = function(word,string) {
+    var wordsOfString = string.split(' '),
+      frequency = 0;
+    wordsOfString.forEach(function(wordTab,index){
+      if(word === wordTab){
+        frequency++;
+      }
+    });
+    return frequency;
+  }
+  var removeRepetions = function(doc) {
+    var subDocTab = doc.split(' ');
+    for (i = 0 ; i < subDocTab.length/2 ; i++) {
+      while (wordFrequencyStr(subDocTab[i].trim(),doc) > 1){
+        doc = doc.replace(subDocTab[i].trim()," ");
+      }
+    }
+    return doc.trim();
+ }
   var removeStopList = function(document1) {
     document1 = document1.trim();
+    document1 = removeRepetions(document1);
     stopList.forEach(function(value) {
       while(document1.indexOf(value) !== -1) {
         document1 = document1.toLowerCase().replace(value, " ");
