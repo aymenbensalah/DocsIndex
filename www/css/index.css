@@ -1,22 +1,30 @@
 #footer{
-  background-color: #3F51B5;
   color: white;
   font-family: "Gabriola";
-  font-size: 25px;
+  font-size: 20px;
+  background-color: #00a3d8;
 }
+
 #header{
-  background-color: #3F51B5;
   color: white;
   font-family: "Gabriola";
-  font-size: 25px;
+  font-size: 30px;
+  background-color: #00a3d8;
+
 }
-li{
-    background-color :#F3E5F5;
-    font-family: "Gabriola";
-    font-size: 25px;
+#content{
+    background-color: white;
+    font-family: "consolas";
+    font-size: 11px;
+    color: black;
 }
-a{
-    background-color :#F3E5F5;
-    font-family: "Gabriola";
-    font-size: 25px;
+#content a{
+    font-family: "consolas";
+    font-size: 15px;
+    background-color: white;
+    color: black;
+    margin: -1px;
+}
+ul input {
+    margin: -1px;
 }
