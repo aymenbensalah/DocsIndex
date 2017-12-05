@@ -1,0 +1,30 @@
+#footer{
+  color: white;
+  font-family: "Gabriola";
+  font-size: 20px;
+  background-color: #00a3d8;
+}
+
+#header{
+  color: white;
+  font-family: "Gabriola";
+  font-size: 30px;
+  background-color: #00a3d8;
+
+}
+#content{
+    background-color: white;
+    font-family: "consolas";
+    font-size: 11px;
+    color: black;
+}
+#content a{
+    font-family: "consolas";
+    font-size: 15px;
+    background-color: white;
+    color: black;
+    margin: -1px;
+}
+ul input {
+    margin: -1px;
+}

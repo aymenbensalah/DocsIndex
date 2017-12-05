@@ -56,32 +56,61 @@ var indextion = function() {
       "Spider Cochon , Spider Cochon , il marcher au plafond"
     ];
   $("#docs").hide();
-  $("#displayDocs").on("tap",function() {
+  $("#displayDocs").on("tap",function(event) {
     $("#docs").css("display", "visible");
     $("#docs").html("");
     for (var i = 0; i < docs.length; i++) {
       $("#docs").append("<p>"+"Document N° " + (i + 1) + ":" + docs[i]+"</p>"+"<br>");
     }
-    $("#docs").slideToggle();
+    if (!$("#docs").is(":visible")){
+      $("#docs").stop().slideDown("slow");
+    }
+    if ($("#docs").is(":visible")){
+      $("#docs").stop().slideUp("slow");
+    }
   });
   //add Doc
 $('#addDocInput').hide();
 $('#addDocBtn').hide();
-$("#addDoc").on("tap",function(){
+$("#addDoc").on("tap",function(event){
   $("#addDocInput").css("display","visible");
   $("#addDocBtn").css("display","visible");
-  $("#addDocInput").slideToggle();
-  $("#addDocBtn").slideToggle();
+  if (!$("#addDocInput").is(":visible")){
+    $("#addDocInput").stop().slideDown("slow");
+  }
+  if (!$("#addDocBtn").is(":visible")){
+    $("#addDocBtn").stop().slideDown("slow");
+  }
   if($("#addDocInput").val() !="") {
-    $("#addDocBtn").on("tap",function(){
+    $("#addDocBtn").on("tap",function(event) {
       docs.push($("#addDocInput").val());
     }
     );
   }
 }
 );
+  var wordFrequencyStr = function(word,string) {
+    var wordsOfString = string.split(' '),
+      frequency = 0;
+    wordsOfString.forEach(function(wordTab,index){
+      if(word === wordTab){
+        frequency++;
+      }
+    });
+    return frequency;
+  }
+  var removeRepetions = function(doc) {
+    var subDocTab = doc.split(' ');
+    for (i = 0 ; i < subDocTab.length/2 ; i++) {
+      while (wordFrequencyStr(subDocTab[i].trim(),doc) > 1){
+        doc = doc.replace(subDocTab[i].trim()," ");
+      }
+    }
+    return doc.trim();
+ }
   var removeStopList = function(document1) {
     document1 = document1.trim();
+    document1 = removeRepetions(document1);
     stopList.forEach(function(value) {
       while(document1.indexOf(value) !== -1) {
         document1 = document1.toLowerCase().replace(value, " ");
@@ -145,10 +174,13 @@ $("#addDoc").on("tap",function(){
   };
   //affiche IndexedDocs
   $("#docsIndexed").hide();
-  $("#displayIndexedDocs").on("tap",function() {
+  $("#displayIndexedDocs").on("tap",function(event) {
     $("#docsIndexed").html("");
     $("#docsIndexed").css("display", "visible");
-    $("#docsIndexed").slideToggle();
+    if (!$("#docsIndexed").is(":visible")){
+      $("#docsIndexed").stop().slideDown("slow");
+    }
+
     for (var doc in documentIndexation(docs)) {
       $("#docsIndexed").append("<p>" + doc);
       for (var wordd in documentIndexation(docs)[doc]) {
@@ -184,15 +216,23 @@ $("#addDoc").on("tap",function(){
   };
 
   $("#inversDocsDisplay").hide();
-  $("#inversDocs").on("tap",function(){
+  $("#inversDocs").on("tap",function(event){
       var inversedoc = inversedDocs(docs);
        $("#inversDocsDisplay").html("");
-       $("#inversDocsDisplay").slideToggle();
        $("#inversDocsDisplay").css("display","visible");
        $("#inversDocsDisplay").append("\n"+inversedoc);
+       if (! $("#inversDocsDisplay").is(":visible")){
+          $("#inversDocsDisplay").stop().slideDown("slow");
+       }
    });
 
 }
+$(document).ready(
+  function(){
+      indextion();
+      console.log("documen load");
+  }
+);
 
 document.addEventListener(
   "deviceready",

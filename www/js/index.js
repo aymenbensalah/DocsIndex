@@ -56,24 +56,33 @@ var indextion = function() {
       "Spider Cochon , Spider Cochon , il marcher au plafond"
     ];
   $("#docs").hide();
-  $("#displayDocs").on("tap",function() {
+  $("#displayDocs").on("tap",function(event) {
     $("#docs").css("display", "visible");
     $("#docs").html("");
     for (var i = 0; i < docs.length; i++) {
       $("#docs").append("<p>"+"Document N° " + (i + 1) + ":" + docs[i]+"</p>"+"<br>");
     }
-    $("#docs").slideToggle();
+    if (!$("#docs").is(":visible")){
+      $("#docs").stop().slideDown("slow");
+    }
+    if ($("#docs").is(":visible")){
+      $("#docs").stop().slideUp("slow");
+    }
   });
   //add Doc
 $('#addDocInput').hide();
 $('#addDocBtn').hide();
-$("#addDoc").on("tap",function(){
+$("#addDoc").on("tap",function(event){
   $("#addDocInput").css("display","visible");
   $("#addDocBtn").css("display","visible");
-  $("#addDocInput").slideToggle();
-  $("#addDocBtn").slideToggle();
+  if (!$("#addDocInput").is(":visible")){
+    $("#addDocInput").stop().slideDown("slow");
+  }
+  if (!$("#addDocBtn").is(":visible")){
+    $("#addDocBtn").stop().slideDown("slow");
+  }
   if($("#addDocInput").val() !="") {
-    $("#addDocBtn").on("tap",function() {
+    $("#addDocBtn").on("tap",function(event) {
       docs.push($("#addDocInput").val());
     }
     );
@@ -165,10 +174,13 @@ $("#addDoc").on("tap",function(){
   };
   //affiche IndexedDocs
   $("#docsIndexed").hide();
-  $("#displayIndexedDocs").on("tap",function() {
+  $("#displayIndexedDocs").on("tap",function(event) {
     $("#docsIndexed").html("");
     $("#docsIndexed").css("display", "visible");
-    $("#docsIndexed").slideToggle();
+    if (!$("#docsIndexed").is(":visible")){
+      $("#docsIndexed").stop().slideDown("slow");
+    }
+
     for (var doc in documentIndexation(docs)) {
       $("#docsIndexed").append("<p>" + doc);
       for (var wordd in documentIndexation(docs)[doc]) {
@@ -204,12 +216,14 @@ $("#addDoc").on("tap",function(){
   };
 
   $("#inversDocsDisplay").hide();
-  $("#inversDocs").on("tap",function(){
+  $("#inversDocs").on("tap",function(event){
       var inversedoc = inversedDocs(docs);
        $("#inversDocsDisplay").html("");
-       $("#inversDocsDisplay").slideToggle();
        $("#inversDocsDisplay").css("display","visible");
        $("#inversDocsDisplay").append("\n"+inversedoc);
+       if (! $("#inversDocsDisplay").is(":visible")){
+          $("#inversDocsDisplay").stop().slideDown("slow");
+       }
    });
 
 }
