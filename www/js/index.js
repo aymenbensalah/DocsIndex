@@ -55,64 +55,68 @@ var indextion = function() {
       "Les moutons sont dans la bergerie",
       "Spider Cochon , Spider Cochon , il marcher au plafond"
     ];
+
   $("#docs").hide();
-  $("#displayDocs").on("tap",function(event) {
+  $("#displayDocs").on("tap", function(event) {
     $("#docs").css("display", "visible");
     $("#docs").html("");
     for (var i = 0; i < docs.length; i++) {
-      $("#docs").append("<p>"+"Document N° " + (i + 1) + ":" + docs[i]+"</p>"+"<br>");
+      $("#docs").append(
+        "<p>" + "Document N° " + (i + 1) + ":" + docs[i] + "</p>" + "<br>"
+      );
     }
-    if (!$("#docs").is(":visible")){
-      $("#docs").stop().slideDown("slow");
-    }
-    if ($("#docs").is(":visible")){
-      $("#docs").stop().slideUp("slow");
-    }
+    $("#docs").stop().slideToggle("slow");
   });
   //add Doc
-$('#addDocInput').hide();
-$('#addDocBtn').hide();
-$("#addDoc").on("tap",function(event){
-  $("#addDocInput").css("display","visible");
-  $("#addDocBtn").css("display","visible");
-  if (!$("#addDocInput").is(":visible")){
-    $("#addDocInput").stop().slideDown("slow");
-  }
-  if (!$("#addDocBtn").is(":visible")){
-    $("#addDocBtn").stop().slideDown("slow");
-  }
-  if($("#addDocInput").val() !="") {
-    $("#addDocBtn").on("tap",function(event) {
-      docs.push($("#addDocInput").val());
+  $("#addDocInput").hide();
+  $("#addDocBtn").hide();
+  $("#addDoc").on("tap", function(event) {
+    $("#addDocInput").css("display", "visible");
+    $("#addDocBtn").css("display", "visible");
+    $("#addDocInput").stop().slideToggle("slow");
+    $("#addDocBtn").stop().slideToggle("slow");
+    if ($("#addDocInput").val() != "") {
+      $("#addDocBtn").on("tap", function(event) {
+        docs.push($("#addDocInput").val());
+        for(doc in documentIndexation([$("#addDocInput").val()])) {
+          for(word in documentIndexation([
+            $("#addDocInput").val()
+            ])[doc]) {
+           $("#newDocIndexed").append(" "+
+            word+
+            " : "+
+            documentIndexation([
+            $("#addDocInput").val()
+            ])[doc][word]);
+          }
+
+        }
+      });
     }
-    );
-  }
-}
-);
-  var wordFrequencyStr = function(word,string) {
-    var wordsOfString = string.split(' '),
-      frequency = 0;
-    wordsOfString.forEach(function(wordTab,index){
-      if(word === wordTab){
+  });
+  var wordFrequencyStr = function(word, string) {
+    var wordsOfString = string.split(" "), frequency = 0;
+    wordsOfString.forEach(function(wordTab, index) {
+      if (word === wordTab) {
         frequency++;
       }
     });
     return frequency;
-  }
+  };
   var removeRepetions = function(doc) {
-    var subDocTab = doc.split(' ');
-    for (i = 0 ; i < subDocTab.length/2 ; i++) {
-      while (wordFrequencyStr(subDocTab[i].trim(),doc) > 1){
-        doc = doc.replace(subDocTab[i].trim()," ");
+    var subDocTab = doc.split(" ");
+    for (i = 0; i < subDocTab.length / 2; i++) {
+      while (wordFrequencyStr(subDocTab[i].trim(), doc) > 1) {
+        doc = doc.replace(subDocTab[i].trim(), " ");
       }
     }
     return doc.trim();
- }
+  };
   var removeStopList = function(document1) {
     document1 = document1.trim();
     document1 = removeRepetions(document1);
     stopList.forEach(function(value) {
-      while(document1.indexOf(value) !== -1) {
+      while (document1.indexOf(value) !== -1) {
         document1 = document1.toLowerCase().replace(value, " ");
       }
     });
@@ -136,7 +140,7 @@ $("#addDoc").on("tap",function(event){
    * Stemming document.
    *
    * @param  {[type]} documents [description]
-   * @return {[type]}           [description]
+   * @return {[type]}   stemmingWord        [description]
    */
   var stemmingDoc = function(documents) {
     var wordsDoc = documents.split(" ");
@@ -174,67 +178,84 @@ $("#addDoc").on("tap",function(event){
   };
   //affiche IndexedDocs
   $("#docsIndexed").hide();
-  $("#displayIndexedDocs").on("tap",function(event) {
+  $("#displayIndexedDocs").on("tap", function(event) {
     $("#docsIndexed").html("");
     $("#docsIndexed").css("display", "visible");
-    if (!$("#docsIndexed").is(":visible")){
-      $("#docsIndexed").stop().slideDown("slow");
-    }
+
+    $("#docsIndexed").stop().slideToggle("slow");
 
     for (var doc in documentIndexation(docs)) {
       $("#docsIndexed").append("<p>" + doc);
       for (var wordd in documentIndexation(docs)[doc]) {
         $("#docsIndexed").append(
-          " "+ wordd + "= " + documentIndexation(docs)[doc][wordd]
+          " " + wordd + "= " + documentIndexation(docs)[doc][wordd]
         );
       }
       $("#docsIndexed").append("</p>");
     }
   });
+  //display new added doc
+
   // inverse
-  var wichDocs = function(word,indexedDocs) {
-     var docAndFrequency = "";
-     for(doc in indexedDocs){
-       if(Object.keys(indexedDocs[doc]).indexOf(word)!=-1){
-           docAndFrequency+=" "+doc+" "+indexedDocs[doc][word];
-           delete indexedDocs[doc][word];
+  var wichDocs = function(word, indexedDocs) {
+    var docAndFrequency = "";
+    for (doc in indexedDocs) {
+      if (Object.keys(indexedDocs[doc]).indexOf(word) != -1) {
+        docAndFrequency += " " + doc + " " + indexedDocs[doc][word];
+        delete indexedDocs[doc][word];
       }
     }
     return docAndFrequency;
-  }
+  };
+  //Search area
+  $("#writeWordInput").hide();
+  $("#writeWordBtn").hide();
+  $("#writeWordDisplay").hide();
+  $("#writeWord").on("tap", function() {
+    $("#writeWordInput").css("display", "visible");
+    $("#searchWordBtn").css("display", "visible");
+    $("#writeWordDisplay").css("display", "visible");
+    $("#writeWordDisplay").slideToggle();
+    $("#writeWordInput").slideToggle();
+    $("#writeWordBtn").slideToggle();
+    $("#writeWordBtn").on("tap", function() {
+      if ($("#writeWordInput").val() != "") {
+        $("#writeWordDisplay").html(
+          $("#writeWordInput").val() +
+            " : " +
+            wichDocs(
+              stemmingWord($("#writeWordInput").val(), "french"),
+              documentIndexation(docs)
+            )
+        );
+      }
+    });
+  });
   var inversedDocs = function(docs) {
-    var indexedDocs = {},inverse ="";
+    var indexedDocs = {}, inverse = "";
 
-    Object.assign(indexedDocs,documentIndexation(docs));
+    Object.assign(indexedDocs, documentIndexation(docs));
     for (var doc in indexedDocs) {
-       for (var word in indexedDocs[doc] ) {
-          inverse+="<br> "+word +" \<"+wichDocs(word,indexedDocs)+"\> ";
-       }
+      for (var word in indexedDocs[doc]) {
+        inverse += "<br> " + word + " \<" + wichDocs(word, indexedDocs) + "\> ";
+      }
     }
 
-  return inverse;
+    return inverse;
   };
 
   $("#inversDocsDisplay").hide();
-  $("#inversDocs").on("tap",function(event){
-      var inversedoc = inversedDocs(docs);
-       $("#inversDocsDisplay").html("");
-       $("#inversDocsDisplay").css("display","visible");
-       $("#inversDocsDisplay").append("\n"+inversedoc);
-       if (! $("#inversDocsDisplay").is(":visible")){
-          $("#inversDocsDisplay").stop().slideDown("slow");
-       }
-   });
+  $("#inversDocs").on("tap", function(event) {
+    var inversedoc = inversedDocs(docs);
+    $("#inversDocsDisplay").html("");
+    $("#inversDocsDisplay").css("display", "visible");
+    $("#inversDocsDisplay").append("\n" + inversedoc);
+    $("#inversDocsDisplay").stop().slideToggle("slow");
+  });
+};
+$(document).ready(function() {
+  indextion();
+  console.log("documen load");
+});
 
-}
-$(document).ready(
-  function(){
-      indextion();
-      console.log("documen load");
-  }
-);
-
-document.addEventListener(
-  "deviceready",
-  indextion
-);
+document.addEventListener("deviceready", indextion);
