@@ -78,18 +78,15 @@ var indextion = function() {
     if ($("#addDocInput").val() != "") {
       $("#addDocBtn").on("tap", function(event) {
         docs.push($("#addDocInput").val());
-        for(doc in documentIndexation([$("#addDocInput").val()])) {
-          for(word in documentIndexation([
-            $("#addDocInput").val()
-            ])[doc]) {
-           $("#newDocIndexed").append(" "+
-            word+
-            " : "+
-            documentIndexation([
-            $("#addDocInput").val()
-            ])[doc][word]);
+        for (doc in documentIndexation([$("#addDocInput").val()])) {
+          for (word in documentIndexation([$("#addDocInput").val()])[doc]) {
+            $("#newDocIndexed").append(
+              " " +
+                word +
+                " : " +
+                documentIndexation([$("#addDocInput").val()])[doc][word]
+            );
           }
-
         }
       });
     }
